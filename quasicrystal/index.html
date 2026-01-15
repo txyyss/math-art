@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>WebGPU Quasicrystal</title>
+    <style>
+        body { margin: 0; overflow: hidden; background: #000; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        canvas { display: block; width: 100vw; height: 100vh; cursor: grab; }
+        canvas:active { cursor: grabbing; }
+
+        #controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            padding: 15px 25px;
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 40px;
+            color: #eee;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            pointer-events: none;
+            align-items: center;
+            user-select: none;
+        }
+
+        #controls.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: #bbb;
+            width: 45px;
+            text-align: right;
+        }
+
+        .value-display {
+            font-family: "SF Mono", "Menlo", "Consolas", "Monaco", monospace;
+            font-size: 12px;
+            color: #fff;
+            width: 36px;
+            text-align: left;
+            font-variant-numeric: tabular-nums;
+            opacity: 0.8;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100px;
+            background: transparent;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 14px;
+            width: 14px;
+            border-radius: 50%;
+            background: #fff;
+            margin-top: -5px;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            transition: transform 0.1s;
+        }
+
+        input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: linear-gradient(90deg, #444, #888);
+            border-radius: 2px;
+        }
+
+        #colorInput::-webkit-slider-runnable-track {
+            background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
+        }
+
+        input[type=range]:focus { outline: none; }
+
+        #resetBtn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+        }
+        #resetBtn:hover { background: rgba(255,255,255,0.3); }
+    </style>
+</head>
+<body>
+    <canvas id="gpuCanvas"></canvas>
+
+    <div id="controls" class="visible">
+        <div class="control-group">
+            <label>Zoom</label>
+            <input type="range" id="zoomInput" min="0.001" max="0.2" step="0.001" value="0.07">
+            <span id="zoomVal" class="value-display">0.070</span>
+        </div>
+        <div class="control-group">
+            <label>Rotate</label>
+            <input type="range" id="rotationInput" min="0" max="360" step="1" value="0">
+            <span id="rotationVal" class="value-display">0°</span>
+        </div>
+        <div class="control-group">
+            <label>Speed</label>
+            <input type="range" id="speedInput" min="0" max="5.0" step="0.1" value="1.0">
+            <span id="speedVal" class="value-display">1.0</span>
+        </div>
+        <div class="control-group">
+            <label>Points</label>
+            <input type="range" id="pointsInput" min="3" max="12" step="1" value="5">
+            <span id="pointsVal" class="value-display">5</span>
+        </div>
+        <div class="control-group">
+            <label>Color</label>
+            <input type="range" id="colorInput" min="0" max="1.0" step="0.01" value="0.0">
+            <span id="colorVal" class="value-display">0.00</span>
+        </div>
+        <button id="resetBtn" title="Reset View">⟲</button>
+    </div>
+
+    <script type="module">
+        // --- UI Logic ---
+        const controls = document.getElementById('controls');
+        let hideTimer;
+
+        function bindSliderDisplay(inputId, displayId, formatter) {
+            const input = document.getElementById(inputId);
+            const display = document.getElementById(displayId);
+            const update = () => { display.innerText = formatter(input.value); };
+            input.addEventListener('input', update);
+            update();
+        }
+
+        bindSliderDisplay('zoomInput', 'zoomVal', v => parseFloat(v).toFixed(3));
+        bindSliderDisplay('rotationInput', 'rotationVal', v => Math.round(v) + '°');
+        bindSliderDisplay('speedInput', 'speedVal', v => parseFloat(v).toFixed(1));
+        bindSliderDisplay('pointsInput', 'pointsVal', v => v);
+        bindSliderDisplay('colorInput', 'colorVal', v => parseFloat(v).toFixed(2));
+
+        function showUI() {
+            controls.classList.add('visible');
+            clearTimeout(hideTimer);
+            hideTimer = setTimeout(() => {
+                if (!controls.matches(':hover')) {
+                    controls.classList.remove('visible');
+                }
+            }, 3000);
+        }
+
+        document.addEventListener('mousemove', showUI);
+        document.addEventListener('touchstart', showUI);
+        document.addEventListener('wheel', showUI);
+        document.addEventListener('mousedown', showUI);
+        controls.addEventListener('mouseenter', () => clearTimeout(hideTimer));
+        controls.addEventListener('mouseleave', showUI);
+
+        // --- WebGPU Logic ---
+        async function init() {
+            if (!navigator.gpu) {
+                alert("WebGPU not supported.");
+                return;
+            }
+
+            const canvas = document.getElementById('gpuCanvas');
+            const adapter = await navigator.gpu.requestAdapter();
+            const device = await adapter.requestDevice();
+            const context = canvas.getContext('webgpu');
+            const presentationFormat = navigator.gpu.getPreferredCanvasFormat();
+
+            context.configure({
+                device: device,
+                format: presentationFormat,
+                alphaMode: 'premultiplied',
+            });
+
+            const response = await fetch('./shader.wgsl');
+
+            const shaderCode = await response.text();
+
+            const shaderModule = device.createShaderModule({ code: shaderCode });
+
+            const pipeline = device.createRenderPipeline({
+                layout: 'auto',
+                vertex: { module: shaderModule, entryPoint: 'vs_main' },
+                fragment: { module: shaderModule, entryPoint: 'fs_main', targets: [{ format: presentationFormat }] },
+                primitive: { topology: 'triangle-strip' },
+            });
+
+            const uniformBufferSize = 48;
+            const uniformBuffer = device.createBuffer({
+                size: uniformBufferSize,
+                usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
+            });
+
+            const bindGroup = device.createBindGroup({
+                layout: pipeline.getBindGroupLayout(0),
+                entries: [{ binding: 0, resource: { buffer: uniformBuffer } }],
+            });
+
+            const uniformData = new Float32Array(12);
+
+            let accumulatedTime = 0.0;
+            let lastFrameTime = performance.now();
+            let offsetX = 0.0;
+            let offsetY = 0.0;
+
+            const zoomInput = document.getElementById('zoomInput');
+            const rotationInput = document.getElementById('rotationInput');
+            const speedInput = document.getElementById('speedInput');
+            const colorInput = document.getElementById('colorInput');
+            const pointsInput = document.getElementById('pointsInput');
+
+            // --- INTERACTION LOGIC ---
+
+            let isZoomingGesture = false;
+            let gestureStartZoom = 0;
+            let gestureStartRotation = 0;
+
+            let isDragging = false;
+            let lastMouseX = 0;
+            let lastMouseY = 0;
+
+            // 1. Reset
+            document.getElementById('resetBtn').addEventListener('click', () => {
+                offsetX = 0;
+                offsetY = 0;
+                zoomInput.value = 0.07;
+                rotationInput.value = 0;
+                zoomInput.dispatchEvent(new Event('input'));
+                rotationInput.dispatchEvent(new Event('input'));
+            });
+
+            // 2. Gesture (Pinch & Rotate)
+            canvas.addEventListener('gesturestart', (e) => {
+                e.preventDefault();
+                isZoomingGesture = true;
+                gestureStartZoom = parseFloat(zoomInput.value);
+                gestureStartRotation = parseFloat(rotationInput.value);
+            });
+
+            canvas.addEventListener('gesturechange', (e) => {
+                e.preventDefault();
+
+                // Zoom
+                let newZoom = gestureStartZoom / e.scale;
+                const min = parseFloat(zoomInput.min);
+                const max = parseFloat(zoomInput.max);
+                newZoom = Math.min(Math.max(newZoom, min), max);
+                zoomInput.value = newZoom;
+                zoomInput.dispatchEvent(new Event('input'));
+
+                // Rotation
+                let newRotation = gestureStartRotation - e.rotation;
+                newRotation = (newRotation % 360);
+                if (newRotation < 0) newRotation += 360;
+
+                rotationInput.value = newRotation;
+                rotationInput.dispatchEvent(new Event('input'));
+            });
+
+            canvas.addEventListener('gestureend', (e) => {
+                e.preventDefault();
+                isZoomingGesture = false;
+            });
+
+            // --- CRITICAL FIX: Coordinate System Rotation for Pan ---
+            // Helper function to rotate a movement vector (dx, dy)
+            // to align with the Shader's rotated coordinate system.
+            function getRotatedDelta(dx, dy) {
+                const angleDeg = parseFloat(rotationInput.value);
+                const angleRad = angleDeg * Math.PI / 180.0;
+                const c = Math.cos(angleRad);
+                const s = Math.sin(angleRad);
+
+                // Rotation Matrix:
+                // x' = x*c - y*s
+                // y' = x*s + y*c
+                // This matches the Shader's rotation logic.
+                // We apply this to the MOUSE DELTA so that "Right" on screen
+                // becomes "Right" in the rotated pattern space.
+                return {
+                    x: dx * c - dy * s,
+                    y: dx * s + dy * c
+                };
+            }
+
+            // 3. Wheel (Pan) - Uses Rotated Delta
+            canvas.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                if (isZoomingGesture) return;
+
+                const z = parseFloat(zoomInput.value);
+
+                // 1. Get raw screen delta
+                const rawDx = e.deltaX;
+                const rawDy = e.deltaY;
+
+                // 2. Rotate delta to match pattern angle
+                const rotated = getRotatedDelta(rawDx, rawDy);
+
+                // 3. Apply to offset (using confirmed += direction)
+                offsetX += rotated.x * z;
+                offsetY += rotated.y * z;
+            }, { passive: false });
+
+            // 4. Mouse Drag (Pan) - Uses Rotated Delta
+            canvas.addEventListener('mousedown', (e) => {
+                if (e.button !== 0) return;
+                isDragging = true;
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+                canvas.style.cursor = 'grabbing';
+            });
+
+            canvas.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+
+                // 1. Get raw screen delta
+                const dx = e.clientX - lastMouseX;
+                const dy = e.clientY - lastMouseY;
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+
+                const z = parseFloat(zoomInput.value);
+
+                // 2. Rotate delta to match pattern angle
+                const rotated = getRotatedDelta(dx, dy);
+
+                // 3. Apply to offset (using confirmed -= direction)
+                offsetX -= rotated.x * z;
+                offsetY -= rotated.y * z;
+            });
+
+            const stopDragging = () => {
+                if (isDragging) {
+                    isDragging = false;
+                    canvas.style.cursor = 'grab';
+                }
+            };
+            canvas.addEventListener('mouseup', stopDragging);
+            canvas.addEventListener('mouseleave', stopDragging);
+
+
+            function render(now) {
+                const dt = (now - lastFrameTime) * 0.001;
+                lastFrameTime = now;
+
+                const speed = parseFloat(speedInput.value);
+                const zoom = parseFloat(zoomInput.value);
+                const hue = parseFloat(colorInput.value);
+                const points = parseFloat(pointsInput.value);
+
+                const angleDeg = parseFloat(rotationInput.value);
+                const angleRad = angleDeg * Math.PI / 180.0;
+
+                accumulatedTime = (accumulatedTime + dt * speed) % (2 * Math.PI);
+
+                const devicePixelRatio = window.devicePixelRatio || 1;
+                const presentationWidth = Math.floor(canvas.clientWidth * devicePixelRatio);
+                const presentationHeight = Math.floor(canvas.clientHeight * devicePixelRatio);
+                if (canvas.width !== presentationWidth || canvas.height !== presentationHeight) {
+                    canvas.width = presentationWidth;
+                    canvas.height = presentationHeight;
+                }
+
+                uniformData[0] = canvas.width;
+                uniformData[1] = canvas.height;
+                uniformData[2] = offsetX;
+                uniformData[3] = offsetY;
+                uniformData[4] = accumulatedTime;
+                uniformData[5] = zoom;
+                uniformData[6] = angleRad;
+                uniformData[7] = hue;
+                uniformData[8] = points;
+
+                device.queue.writeBuffer(uniformBuffer, 0, uniformData);
+
+                const commandEncoder = device.createCommandEncoder();
+                const textureView = context.getCurrentTexture().createView();
+                const passEncoder = commandEncoder.beginRenderPass({
+                    colorAttachments: [{
+                        view: textureView,
+                        clearValue: { r: 0, g: 0, b: 0, a: 1 },
+                        loadOp: 'clear',
+                        storeOp: 'store',
+                    }],
+                });
+
+                passEncoder.setPipeline(pipeline);
+                passEncoder.setBindGroup(0, bindGroup);
+                passEncoder.draw(4);
+                passEncoder.end();
+                device.queue.submit([commandEncoder.finish()]);
+
+                requestAnimationFrame(render);
+            }
+
+            requestAnimationFrame(render);
+        }
+
+        init();
+    </script>
+</body>
+</html>
