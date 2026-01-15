@@ -2,7 +2,7 @@
 
 An interactive, high-performance renderer for n-fold symmetry quasicrystals using WebGPU. This project visualizes infinite, non-periodic patterns based on high-dimensional projection theory.
 
-**[Live Demo](https://txyyss.github.io/webgpu/quasicrystal/)**
+**[Live Demo](https://txyyss.github.io/math-art/quasicrystal/)**
 
 ## Key Features
 
@@ -34,7 +34,7 @@ An interactive, high-performance renderer for n-fold symmetry quasicrystals usin
 
 This project requires a browser with **WebGPU** support (e.g., Chrome 113+, Edge, or Safari).
 
-1.  Open the [Live Demo](https://txyyss.github.io/webgpu/quasicrystal/).
+1.  Open the [Live Demo](https://txyyss.github.io/math-art/quasicrystal/).
 2.  Enjoy the exploration of the aperiodic structure!
 
 ---
