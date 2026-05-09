@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>一种星面编织结构的设计</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero__text">
+        <p class="eyebrow">Stellated Surface Weave</p>
+        <h1>一种星面编织结构的设计</h1>
+        <p>
+          这里我们介绍一种以小星形正十二面体为出发点的空间结构。它的线索来自十二个彼此穿插的正五角星面：先在每个星面里安排一组折线，再把这些线索扩展成有厚度的折面条带，让它们在尖点、折点和面中心自然合拢。
+        </p>
+      </div>
+      <div class="hero__viewer">
+        <div class="viewer" data-viewer="final" data-width="0.16" aria-label="小星形正十二面体星面编织结构的最终形体"></div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="section__copy">
+          <h2>1. 小星形正十二面体：十二个正五角星面</h2>
+          <p>
+            要理解这个形体，可以先从正十二面体看起。正十二面体有十二个正五边形面；如果把每个面的相邻面中心沿外法向抬成新的尖点，再按隔一个取一个的顺序连接，就会得到围绕正十二面体展开的十二个正五角星面。
+          </p>
+          <p>
+            这些五角星不是贴在表面的图案，而是位于三维空间中的真实平面。后面的折线、截面和斜接都要服从这些平面的方向；也正因为如此，这个结构才会带有一种从星面里长出来的秩序感。
+          </p>
+        </div>
+        <div class="figures-stack">
+          <figure class="figure">
+            <div class="viewer" data-viewer="intro"></div>
+            <figcaption>正十二面体作为母体；深色折线显示十二个五角星面如何围绕它排布。</figcaption>
+          </figure>
+          <figure class="figure">
+            <div class="viewer" data-viewer="solid-ssd"></div>
+            <figcaption>传统的小星形正十二面体外形：十二个五角星面在空间中互相穿插。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section section--alt">
+        <div class="section__copy">
+          <h2>2. 星面中的中心线</h2>
+          <p>
+            有了星面以后，下一步是在每个星面里放入一组中心线。做法很简单：从五角星的一个尖点出发，先沿着相邻星边走到比例 <code>(5 - sqrt(5)) / 10</code> 的位置，然后转向这个星面的中心。五个尖点各自生成一条这样的折线，就形成了一个五爪形状。
+          </p>
+          <p>
+            这个比例并不是装饰性的选择。它保证了从折点连向中心的那一段，正好和同一个尖点的另一条分叉平行。图中的圆管只是用来显示这套中心线；真正的设计问题，是如何把这些线变成有厚度、能彼此贴合的折面条带。
+          </p>
+        </div>
+        <figure class="figure">
+          <div class="viewer" data-viewer="skeleton"></div>
+          <figcaption>每个五角星面放入五条折线管，用来表达后续实体化的中心路径。</figcaption>
+        </figure>
+      </section>
+
+      <section class="section">
+        <div class="section__copy">
+          <h2>3. 从一个尖点开始：五棱锥与平行四边形截面</h2>
+          <p>
+            把中心线变成有厚度的结构时，最先要处理的是尖点。五个相邻星面都会抵达同一个尖点，但它们不能各自长成独立的小尖锥；那样得到的只是互相穿插的零件，而不是一个共同闭合的节点。
+          </p>
+          <p>
+            这里采用的拓扑是：五个分叉共享一个五棱锥尖端。每条分叉的一条外棱汇聚到原来的尖点，和它相对的内棱则汇聚到一个沿尖点到原点方向退后的内尖点。星面上的六边形面保持不变；每个分叉再由相邻两个星面的方向长出两个侧面，并用平行四边形法则补出第四个角。这样得到的截面不是矩形，但每个面都有明确的几何来源。
+          </p>
+        </div>
+        <figure class="figure">
+          <div class="viewer" data-viewer="tip"></div>
+          <figcaption>局部尖点原型：五个分叉共享一个五棱锥尖端。</figcaption>
+        </figure>
+      </section>
+
+      <section class="section section--alt">
+        <div class="section__copy">
+          <h2>4. 折点到中心：同宽的平行条与中心斜接</h2>
+          <p>
+            尖点闭合以后，分叉还要从折点继续走向每个星面的中心。这里如果只是把端点直接连到中心，中心附近的五边形会偏斜，弯折处的条带也会出现宽窄不一的情况。
+          </p>
+          <p>
+            因此折点后的连接要继续保持平行关系，并让条带中线通过星面中心。由正五角星的几何关系可以得到两个固定延伸系数：<code>sqrt((5 + sqrt(5)) / 10)</code> 和 <code>sqrt((5 - sqrt(5)) / 10)</code>。前者控制外侧斜接，后者控制内侧补偿；两者配合起来，中心五边形就能保持对称，弯折处的条带也能维持一致的宽度。
+          </p>
+        </div>
+        <figure class="figure">
+          <div class="viewer" data-viewer="final" data-width="0.16"></div>
+          <figcaption>一个固定宽度的完整版本，用来观察整体的共面五爪面和中心斜接。</figcaption>
+        </figure>
+      </section>
+
+      <section class="section section--focus">
+        <div class="section__copy">
+          <h2>5. 可交互的最终形体</h2>
+          <p>
+            把这些局部规则应用到全部十二个星面以后，就得到最终的星面编织结构。它保留了小星形正十二面体的整体姿态，但形体本身不再只是原始星面的外壳，而是一组沿星面方向相互咬合的折面条带。
+          </p>
+          <p>
+            下面的滑块可以调节条带宽度。宽度变化时，尖点、折点和中心处的斜接都会重新计算，因此可以直接观察这个设计在细线和宽条之间的形态变化。
+          </p>
+          <div class="controls">
+            <label for="width-slider">条带宽度</label>
+            <input id="width-slider" type="range" min="0.06" max="0.3" step="0.01" value="0.2" />
+            <output id="width-value" for="width-slider">0.20</output>
+          </div>
+        </div>
+        <figure class="figure figure--large">
+          <div class="viewer viewer--large" data-viewer="interactive-final"></div>
+          <figcaption>拖动滑块可以实时重建最终形体，观察条带宽度变化带来的整体效果。</figcaption>
+        </figure>
+      </section>
+    </main>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
