@@ -1,8 +1,8 @@
 :root {
   color-scheme: light;
   font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", ui-sans-serif,
+    system-ui, sans-serif;
   background: #f4f1ea;
   color: #18212a;
 }
@@ -35,7 +35,7 @@ button {
   justify-content: center;
   gap: 10px;
   align-items: center;
-  padding: 9px 14px;
+  padding: 6px 14px;
   border-bottom: 1px solid #d8d0c3;
   background: rgba(250, 248, 243, 0.94);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
@@ -43,21 +43,27 @@ button {
 
 .tool-controls {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   align-items: center;
 }
 
 .tool-controls button {
-  width: 38px;
-  height: 38px;
-  display: grid;
-  place-items: center;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 12px;
   border: 1px solid #b8c0c8;
   border-radius: 7px;
   background: #ffffff;
   color: #22303b;
   cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
   touch-action: manipulation;
+  white-space: nowrap;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -82,8 +88,8 @@ button {
 }
 
 .tool-controls svg {
-  width: 21px;
-  height: 21px;
+  width: 20px;
+  height: 20px;
   fill: none;
   stroke: currentColor;
   stroke-width: 2;

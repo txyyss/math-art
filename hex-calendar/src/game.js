@@ -101,7 +101,7 @@ const ICONS = {
   solve:
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8 19 13"/><path d="M15 9h.01"/><path d="M17.8 6.2 19 5"/><path d="m3 21 9-9"/><path d="M12.2 6.2 11 5"/></svg>',
   reset:
-    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>',
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"/><path d="m5.082 11.09 8.828 8.828"/></svg>',
 };
 
 const WINDOW_REGIONS = ["month", "date", "weekday"];
@@ -251,8 +251,8 @@ export class HexCalendarGame {
       <main class="app-shell">
         <section class="control-strip" aria-label="Puzzle controls">
           <div class="tool-controls">
-            <button type="button" data-action="reset" title="Reset all pieces" aria-label="Reset all pieces">${ICONS.reset}</button>
-            <button type="button" data-action="solve" title="Solve" aria-label="Solve current date">${ICONS.solve}</button>
+            <button type="button" data-action="reset" title="Reset pieces" aria-label="Reset pieces">${ICONS.reset}<span>Reset</span></button>
+            <button type="button" data-action="solve" title="Solve current date" aria-label="Solve current date">${ICONS.solve}<span>Solve</span></button>
           </div>
         </section>
         <section class="game-surface">
