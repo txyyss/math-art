@@ -57,15 +57,28 @@ button {
   background: #ffffff;
   color: #22303b;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.tool-controls button:hover {
-  background: #eef4f4;
-  border-color: #7f9498;
+.tool-controls button:focus {
+  outline: none;
+}
+
+.tool-controls button:focus-visible {
+  outline: 2px solid #1f6f8b;
+  outline-offset: 2px;
 }
 
 .tool-controls button:active {
   transform: translateY(1px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tool-controls button:hover {
+    background: #eef4f4;
+    border-color: #7f9498;
+  }
 }
 
 .tool-controls svg {
@@ -81,6 +94,7 @@ button {
 .game-surface {
   min-height: 0;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
   background: #ece6da;
 }
 
@@ -90,7 +104,7 @@ button {
   min-width: 760px;
   height: 100%;
   min-height: 650px;
-  touch-action: none;
+  touch-action: pan-y;
   user-select: none;
 }
 
@@ -154,6 +168,7 @@ button {
 
 .piece {
   cursor: grab;
+  touch-action: none;
   transform-box: fill-box;
   transform-origin: center;
 }
@@ -196,6 +211,7 @@ button {
 
 .piece-action-button {
   cursor: pointer;
+  touch-action: none;
 }
 
 .piece-action-hit {
@@ -204,13 +220,15 @@ button {
   stroke-width: 1.4px;
 }
 
-.piece-action-button:hover .piece-action-hit {
-  fill: rgba(238, 244, 244, 0.94);
-  stroke: rgba(31, 111, 139, 0.72);
-}
-
 .piece-action-button:active .piece-action-hit {
   fill: rgba(218, 231, 230, 0.96);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .piece-action-button:hover .piece-action-hit {
+    fill: rgba(238, 244, 244, 0.94);
+    stroke: rgba(31, 111, 139, 0.72);
+  }
 }
 
 .piece-action-icon {

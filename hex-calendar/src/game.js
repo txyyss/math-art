@@ -9,8 +9,8 @@ import {
   subCells,
   svgElement,
   transformCells,
-} from "./hex.js?v=20260627-pieceactions7";
-import { CalendarSolver } from "./solver.js?v=20260627-pieceactions7";
+} from "./hex.js?v=20260627-pieceactions8";
+import { CalendarSolver } from "./solver.js?v=20260627-pieceactions8";
 
 const COLORS = [
   "#cf5c36",
@@ -251,11 +251,35 @@ export class HexCalendarGame {
     `;
 
     this.svg = this.root.querySelector("#game-svg");
-    this.root.querySelector(".tool-controls").addEventListener("click", (event) => {
+    const toolControls = this.root.querySelector(".tool-controls");
+    let handledPointerAction = null;
+    toolControls.addEventListener("pointerup", (event) => {
       const button = event.target.closest("button[data-action]");
       if (button) {
+        event.preventDefault();
+        handledPointerAction = {
+          action: button.dataset.action,
+          until: event.timeStamp + 700,
+        };
+        button.blur();
         this.handleAction(button.dataset.action);
       }
+    });
+    toolControls.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-action]");
+      if (!button) {
+        return;
+      }
+      if (
+        handledPointerAction?.action === button.dataset.action &&
+        event.timeStamp <= handledPointerAction.until
+      ) {
+        event.preventDefault();
+        handledPointerAction = null;
+        return;
+      }
+      button.blur();
+      this.handleAction(button.dataset.action);
     });
     this.svg.addEventListener("pointermove", (event) => this.handlePointerMove(event));
     this.svg.addEventListener("pointerup", (event) => this.handlePointerEnd(event));

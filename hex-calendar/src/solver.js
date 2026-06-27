@@ -3,7 +3,7 @@ import {
   cellKey,
   subCells,
   transformCells,
-} from "./hex.js?v=20260627-pieceactions7";
+} from "./hex.js?v=20260627-pieceactions8";
 
 function bitFor(index) {
   return 1n << BigInt(index);
