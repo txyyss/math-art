@@ -10,7 +10,7 @@ import {
   svgElement,
   transformCells,
 } from "./hex.js?v=20260627-pieceactions8";
-import { CalendarSolver } from "./solver.js?v=20260627-pieceactions8";
+import { CalendarSolver } from "./solver.js?v=20260628-traypack1";
 
 const COLORS = [
   "#cf5c36",
@@ -65,17 +65,23 @@ const MONTH_LABELS = [
   "Dec",
 ];
 
-const TRAY_HEX_OFFSETS = [
-  { q: 3, r: 0 },
-  { q: 1, r: 0 },
-  { q: 4, r: 4 },
-  { q: 0, r: 1 },
-  { q: 2, r: 6 },
-  { q: 5, r: 0 },
-  { q: 0, r: 6 },
-  { q: 4, r: 1 },
-  { q: 1, r: 4 },
+const TRAY_LAYOUTS = [
+  { offset: { q: 2, r: 0 }, rotation: 0, reflected: false },
+  { offset: { q: -3, r: 5 }, rotation: 5, reflected: false },
+  { offset: { q: 0, r: 0 }, rotation: 0, reflected: false },
+  { offset: { q: 3, r: 0 }, rotation: 2, reflected: false },
+  { offset: { q: 1, r: 5 }, rotation: 5, reflected: false },
+  { offset: { q: 4, r: 1 }, rotation: 0, reflected: true },
+  { offset: { q: 3, r: 2 }, rotation: 0, reflected: false },
+  { offset: { q: 4, r: 2 }, rotation: 1, reflected: true },
+  { offset: { q: -2, r: 3 }, rotation: 0, reflected: false },
 ];
+
+const DEFAULT_TRAY_LAYOUT = {
+  offset: { q: 0, r: 0 },
+  rotation: 0,
+  reflected: false,
+};
 
 // Icons are inline SVG paths from Lucide static v1.21.0 (ISC).
 // See ../THIRD_PARTY_NOTICES.md for license details.
@@ -208,20 +214,25 @@ export class HexCalendarGame {
     this.drag = null;
     this.suppressedPieceClick = null;
     this.layout = null;
-    this.pieces = data.pieces.map((piece, index) => ({
-      id: index,
-      name: piece.name,
-      baseCells: piece.cells.map(makeCell),
-      color: COLORS[index % COLORS.length],
-      rotation: 0,
-      reflected: false,
-      onBoard: false,
-      offset: { q: 0, r: 0 },
-      freeX: 0,
-      freeY: 0,
-      homeX: 0,
-      homeY: 0,
-    }));
+    this.pieces = data.pieces.map((piece, index) => {
+      const trayLayout = TRAY_LAYOUTS[index] ?? DEFAULT_TRAY_LAYOUT;
+      return {
+        id: index,
+        name: piece.name,
+        baseCells: piece.cells.map(makeCell),
+        color: COLORS[index % COLORS.length],
+        rotation: trayLayout.rotation,
+        reflected: trayLayout.reflected,
+        homeRotation: trayLayout.rotation,
+        homeReflected: trayLayout.reflected,
+        onBoard: false,
+        offset: { q: 0, r: 0 },
+        freeX: 0,
+        freeY: 0,
+        homeX: 0,
+        homeY: 0,
+      };
+    });
     this.solver = new CalendarSolver(this.cells, this.pieces);
     this.selectToday();
 
@@ -437,7 +448,7 @@ export class HexCalendarGame {
   trayLocalBounds(side, margin) {
     const points = [];
     for (const piece of this.pieces) {
-      const offset = TRAY_HEX_OFFSETS[piece.id] ?? { q: 0, r: 0 };
+      const { offset } = TRAY_LAYOUTS[piece.id] ?? DEFAULT_TRAY_LAYOUT;
       const anchor = addCells(this.anchorCell(piece), offset);
       const anchorPoint = axialToPixel(anchor, side);
       const anchorPixel = axialToPixel(this.anchorCell(piece), side);
@@ -469,7 +480,7 @@ export class HexCalendarGame {
 
   positionHomes(resetFreePieces) {
     for (const piece of this.pieces) {
-      const offset = TRAY_HEX_OFFSETS[piece.id] ?? { q: 0, r: 0 };
+      const { offset } = TRAY_LAYOUTS[piece.id] ?? DEFAULT_TRAY_LAYOUT;
       const anchor = addCells(this.anchorCell(piece), offset);
       const point = axialToPixel(anchor, this.layout.side);
       piece.homeX = this.layout.tray.origin.x + point.x;
@@ -814,8 +825,8 @@ export class HexCalendarGame {
   }
 
   resetPiece(piece) {
-    piece.rotation = 0;
-    piece.reflected = false;
+    piece.rotation = piece.homeRotation;
+    piece.reflected = piece.homeReflected;
     piece.onBoard = false;
     piece.offset = { q: 0, r: 0 };
     piece.freeX = piece.homeX;
