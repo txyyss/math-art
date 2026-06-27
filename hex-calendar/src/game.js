@@ -382,14 +382,14 @@ export class HexCalendarGame {
     const boardBounds = this.boardLocalBounds(side);
     const trayMargin = baseTrayMargin * scale;
     const trayBounds = this.trayLocalBounds(side, trayMargin);
-    const gap = baseGap * scale;
+    let gap = baseGap * scale;
     const padding = basePadding * scale;
 
     const naturalWidth = compact
       ? Math.max(boardBounds.width, trayBounds.width) + padding * 2
       : boardBounds.width + gap + trayBounds.width + padding * 2;
     const naturalHeight = compact
-      ? boardBounds.height + gap + trayBounds.height + padding * 2
+      ? boardBounds.height + trayBounds.height + padding * 3
       : Math.max(boardBounds.height, trayBounds.height) + padding * 2;
     const width = Math.max(availableWidth, naturalWidth);
     const height = Math.max(availableHeight, naturalHeight);
@@ -397,8 +397,8 @@ export class HexCalendarGame {
     let boardOrigin;
     let trayOrigin;
     if (compact) {
-      const totalHeight = boardBounds.height + gap + trayBounds.height;
-      const top = (height - totalHeight) / 2;
+      gap = (height - boardBounds.height - trayBounds.height) / 3;
+      const top = gap;
       boardOrigin = {
         x: (width - boardBounds.width) / 2 - boardBounds.x,
         y: top - boardBounds.y,
