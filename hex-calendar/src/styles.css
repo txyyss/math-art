@@ -1,0 +1,250 @@
+:root {
+  color-scheme: light;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: #f4f1ea;
+  color: #18212a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(244, 241, 234, 0.92)),
+    #f4f1ea;
+}
+
+button {
+  font: inherit;
+}
+
+.app-shell {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.control-strip {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  padding: 9px 14px;
+  border-bottom: 1px solid #d8d0c3;
+  background: rgba(250, 248, 243, 0.94);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+}
+
+.tool-controls {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.tool-controls button {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #b8c0c8;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #22303b;
+  cursor: pointer;
+}
+
+.tool-controls button:hover {
+  background: #eef4f4;
+  border-color: #7f9498;
+}
+
+.tool-controls button:active {
+  transform: translateY(1px);
+}
+
+.tool-controls svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.game-surface {
+  min-height: 0;
+  overflow: auto;
+  background: #ece6da;
+}
+
+#game-svg {
+  display: block;
+  width: 100%;
+  min-width: 760px;
+  height: 100%;
+  min-height: 650px;
+  touch-action: none;
+  user-select: none;
+}
+
+.svg-bg {
+  fill: #ece6da;
+}
+
+.tray-zone {
+  fill: rgba(255, 255, 255, 0.48);
+  stroke: #d1c7b8;
+  stroke-width: var(--tray-stroke, 1.5px);
+}
+
+.board-cell {
+  stroke: #26333e;
+  stroke-width: var(--board-stroke, 1.55px);
+  cursor: pointer;
+}
+
+.board-outline {
+  pointer-events: none;
+  fill: none;
+  stroke: #26333e;
+  stroke-width: var(--board-stroke, 1.55px);
+}
+
+.board-outline.complete {
+  stroke: #1f7a4d;
+  stroke-width: var(--complete-outline-stroke, 4px);
+}
+
+.board-cell.weekday {
+  fill: #c8dce9;
+}
+
+.board-cell.month {
+  fill: #cfe4c2;
+}
+
+.board-cell.date {
+  fill: #f2d39c;
+}
+
+.board-cell.window-cell {
+  fill: #fffdf7;
+  stroke: #1f6f8b;
+  stroke-width: var(--window-stroke, 3px);
+}
+
+.cell-label {
+  pointer-events: none;
+  text-anchor: middle;
+  font-size: var(--cell-font, 12px);
+  font-weight: 700;
+  fill: #19242f;
+}
+
+.window-label {
+  fill: #1f6f8b;
+}
+
+.piece {
+  cursor: grab;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.piece:active {
+  cursor: grabbing;
+}
+
+.piece.dragging {
+  filter: url("#piece-shadow");
+  transform: translateY(var(--piece-lift, -7px));
+}
+
+.piece-cell {
+  stroke: #17212b;
+  stroke-width: var(--piece-stroke, 1.8px);
+}
+
+.selection-cell {
+  pointer-events: none;
+  fill: none;
+  stroke: #1f6f8b;
+  stroke-width: var(--piece-selected-stroke, 3.6px);
+  stroke-linejoin: round;
+}
+
+.piece.selected .piece-cell {
+  stroke: #101820;
+  stroke-width: var(--piece-stroke, 1.8px);
+}
+
+.piece.invalid .piece-cell {
+  stroke: #b3261e;
+  stroke-width: var(--piece-active-stroke, 3px);
+}
+
+.piece-action-toolbar {
+  filter: drop-shadow(0 5px 10px rgba(23, 33, 43, 0.22));
+}
+
+.piece-action-button {
+  cursor: pointer;
+}
+
+.piece-action-hit {
+  fill: rgba(255, 253, 247, 0.86);
+  stroke: rgba(38, 51, 62, 0.42);
+  stroke-width: 1.4px;
+}
+
+.piece-action-button:hover .piece-action-hit {
+  fill: rgba(238, 244, 244, 0.94);
+  stroke: rgba(31, 111, 139, 0.72);
+}
+
+.piece-action-button:active .piece-action-hit {
+  fill: rgba(218, 231, 230, 0.96);
+}
+
+.piece-action-icon {
+  pointer-events: none;
+  fill: none;
+  stroke: #1d2a34;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.load-error {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  color: #a23a32;
+  font-weight: 700;
+}
+
+@media (max-width: 820px) {
+  .control-strip {
+    gap: 10px;
+    justify-content: center;
+    padding: 8px 12px;
+  }
+
+  .tool-controls {
+    justify-content: center;
+  }
+
+  #game-svg {
+    min-width: 0;
+    height: 100%;
+    min-height: 680px;
+  }
+}

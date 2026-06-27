@@ -10,3 +10,4 @@ This repository serves as a laboratory for exploring concepts from geometry, top
 
 - [WebGPU Quasicrystal Explorer](https://txyyss.github.io/math-art/quasicrystal/)
 - [Stellated Surface Weave](https://txyyss.github.io/math-art/stellated-surface-weave/)
+- [Hex Calendar Puzzle](https://txyyss.github.io/math-art/hex-calendar/)

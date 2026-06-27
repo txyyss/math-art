@@ -1,0 +1,858 @@
+{
+  "version": 1,
+  "source": {
+    "pieceSetPath": "outputs/scheme_B_piece_set.json",
+    "note": "Static snapshot for the browser prototype; regenerate when the piece set changes."
+  },
+  "scheme": {
+    "name": "B",
+    "hexahex_count": 2,
+    "pentahex_count": 7,
+    "area": 47
+  },
+  "board": {
+    "cells": [
+      {
+        "index": 0,
+        "q": -4,
+        "r": 1,
+        "region": "date",
+        "label": "12"
+      },
+      {
+        "index": 1,
+        "q": -4,
+        "r": 3,
+        "region": "date",
+        "label": "4"
+      },
+      {
+        "index": 2,
+        "q": -3,
+        "r": -1,
+        "region": "date",
+        "label": "18"
+      },
+      {
+        "index": 3,
+        "q": -3,
+        "r": 0,
+        "region": "date",
+        "label": "16"
+      },
+      {
+        "index": 4,
+        "q": -3,
+        "r": 1,
+        "region": "date",
+        "label": "13"
+      },
+      {
+        "index": 5,
+        "q": -3,
+        "r": 2,
+        "region": "date",
+        "label": "10"
+      },
+      {
+        "index": 6,
+        "q": -3,
+        "r": 3,
+        "region": "date",
+        "label": "5"
+      },
+      {
+        "index": 7,
+        "q": -3,
+        "r": 4,
+        "region": "date",
+        "label": "1"
+      },
+      {
+        "index": 8,
+        "q": -2,
+        "r": -1,
+        "region": "date",
+        "label": "19"
+      },
+      {
+        "index": 9,
+        "q": -2,
+        "r": 0,
+        "region": "month",
+        "label": "Apr"
+      },
+      {
+        "index": 10,
+        "q": -2,
+        "r": 1,
+        "region": "month",
+        "label": "Mar"
+      },
+      {
+        "index": 11,
+        "q": -2,
+        "r": 2,
+        "region": "month",
+        "label": "Feb"
+      },
+      {
+        "index": 12,
+        "q": -2,
+        "r": 3,
+        "region": "date",
+        "label": "6"
+      },
+      {
+        "index": 13,
+        "q": -2,
+        "r": 4,
+        "region": "date",
+        "label": "2"
+      },
+      {
+        "index": 14,
+        "q": -1,
+        "r": -3,
+        "region": "date",
+        "label": "24"
+      },
+      {
+        "index": 15,
+        "q": -1,
+        "r": -2,
+        "region": "date",
+        "label": "22"
+      },
+      {
+        "index": 16,
+        "q": -1,
+        "r": -1,
+        "region": "month",
+        "label": "May"
+      },
+      {
+        "index": 17,
+        "q": -1,
+        "r": 0,
+        "region": "weekday",
+        "label": "Tue"
+      },
+      {
+        "index": 18,
+        "q": -1,
+        "r": 1,
+        "region": "weekday",
+        "label": "Mon"
+      },
+      {
+        "index": 19,
+        "q": -1,
+        "r": 2,
+        "region": "month",
+        "label": "Jan"
+      },
+      {
+        "index": 20,
+        "q": -1,
+        "r": 3,
+        "region": "date",
+        "label": "7"
+      },
+      {
+        "index": 21,
+        "q": -1,
+        "r": 4,
+        "region": "date",
+        "label": "3"
+      },
+      {
+        "index": 22,
+        "q": 0,
+        "r": -3,
+        "region": "date",
+        "label": "25"
+      },
+      {
+        "index": 23,
+        "q": 0,
+        "r": -2,
+        "region": "month",
+        "label": "Jun"
+      },
+      {
+        "index": 24,
+        "q": 0,
+        "r": -1,
+        "region": "weekday",
+        "label": "Wed"
+      },
+      {
+        "index": 25,
+        "q": 0,
+        "r": 0,
+        "region": "weekday",
+        "label": "Sun"
+      },
+      {
+        "index": 26,
+        "q": 0,
+        "r": 1,
+        "region": "weekday",
+        "label": "Sat"
+      },
+      {
+        "index": 27,
+        "q": 0,
+        "r": 2,
+        "region": "month",
+        "label": "Dec"
+      },
+      {
+        "index": 28,
+        "q": 0,
+        "r": 3,
+        "region": "date",
+        "label": "8"
+      },
+      {
+        "index": 29,
+        "q": 1,
+        "r": -4,
+        "region": "date",
+        "label": "30"
+      },
+      {
+        "index": 30,
+        "q": 1,
+        "r": -3,
+        "region": "date",
+        "label": "26"
+      },
+      {
+        "index": 31,
+        "q": 1,
+        "r": -2,
+        "region": "month",
+        "label": "Jul"
+      },
+      {
+        "index": 32,
+        "q": 1,
+        "r": -1,
+        "region": "weekday",
+        "label": "Thu"
+      },
+      {
+        "index": 33,
+        "q": 1,
+        "r": 0,
+        "region": "weekday",
+        "label": "Fri"
+      },
+      {
+        "index": 34,
+        "q": 1,
+        "r": 1,
+        "region": "month",
+        "label": "Nov"
+      },
+      {
+        "index": 35,
+        "q": 1,
+        "r": 2,
+        "region": "date",
+        "label": "11"
+      },
+      {
+        "index": 36,
+        "q": 1,
+        "r": 3,
+        "region": "date",
+        "label": "9"
+      },
+      {
+        "index": 37,
+        "q": 2,
+        "r": -3,
+        "region": "date",
+        "label": "27"
+      },
+      {
+        "index": 38,
+        "q": 2,
+        "r": -2,
+        "region": "month",
+        "label": "Aug"
+      },
+      {
+        "index": 39,
+        "q": 2,
+        "r": -1,
+        "region": "month",
+        "label": "Sep"
+      },
+      {
+        "index": 40,
+        "q": 2,
+        "r": 0,
+        "region": "month",
+        "label": "Oct"
+      },
+      {
+        "index": 41,
+        "q": 2,
+        "r": 1,
+        "region": "date",
+        "label": "14"
+      },
+      {
+        "index": 42,
+        "q": 3,
+        "r": -4,
+        "region": "date",
+        "label": "31"
+      },
+      {
+        "index": 43,
+        "q": 3,
+        "r": -3,
+        "region": "date",
+        "label": "28"
+      },
+      {
+        "index": 44,
+        "q": 3,
+        "r": -2,
+        "region": "date",
+        "label": "23"
+      },
+      {
+        "index": 45,
+        "q": 3,
+        "r": -1,
+        "region": "date",
+        "label": "20"
+      },
+      {
+        "index": 46,
+        "q": 3,
+        "r": 0,
+        "region": "date",
+        "label": "17"
+      },
+      {
+        "index": 47,
+        "q": 3,
+        "r": 1,
+        "region": "date",
+        "label": "15"
+      },
+      {
+        "index": 48,
+        "q": 4,
+        "r": -3,
+        "region": "date",
+        "label": "29"
+      },
+      {
+        "index": 49,
+        "q": 4,
+        "r": -1,
+        "region": "date",
+        "label": "21"
+      }
+    ],
+    "weekdays": [
+      {
+        "label": "Tue",
+        "q": -1,
+        "r": 0
+      },
+      {
+        "label": "Mon",
+        "q": -1,
+        "r": 1
+      },
+      {
+        "label": "Wed",
+        "q": 0,
+        "r": -1
+      },
+      {
+        "label": "Sun",
+        "q": 0,
+        "r": 0
+      },
+      {
+        "label": "Sat",
+        "q": 0,
+        "r": 1
+      },
+      {
+        "label": "Thu",
+        "q": 1,
+        "r": -1
+      },
+      {
+        "label": "Fri",
+        "q": 1,
+        "r": 0
+      }
+    ],
+    "months": [
+      {
+        "label": "Jan",
+        "q": -1,
+        "r": 2
+      },
+      {
+        "label": "Feb",
+        "q": -2,
+        "r": 2
+      },
+      {
+        "label": "Mar",
+        "q": -2,
+        "r": 1
+      },
+      {
+        "label": "Apr",
+        "q": -2,
+        "r": 0
+      },
+      {
+        "label": "May",
+        "q": -1,
+        "r": -1
+      },
+      {
+        "label": "Jun",
+        "q": 0,
+        "r": -2
+      },
+      {
+        "label": "Jul",
+        "q": 1,
+        "r": -2
+      },
+      {
+        "label": "Aug",
+        "q": 2,
+        "r": -2
+      },
+      {
+        "label": "Sep",
+        "q": 2,
+        "r": -1
+      },
+      {
+        "label": "Oct",
+        "q": 2,
+        "r": 0
+      },
+      {
+        "label": "Nov",
+        "q": 1,
+        "r": 1
+      },
+      {
+        "label": "Dec",
+        "q": 0,
+        "r": 2
+      }
+    ],
+    "dates": [
+      {
+        "label": "1",
+        "q": -3,
+        "r": 4
+      },
+      {
+        "label": "2",
+        "q": -2,
+        "r": 4
+      },
+      {
+        "label": "3",
+        "q": -1,
+        "r": 4
+      },
+      {
+        "label": "4",
+        "q": -4,
+        "r": 3
+      },
+      {
+        "label": "5",
+        "q": -3,
+        "r": 3
+      },
+      {
+        "label": "6",
+        "q": -2,
+        "r": 3
+      },
+      {
+        "label": "7",
+        "q": -1,
+        "r": 3
+      },
+      {
+        "label": "8",
+        "q": 0,
+        "r": 3
+      },
+      {
+        "label": "9",
+        "q": 1,
+        "r": 3
+      },
+      {
+        "label": "10",
+        "q": -3,
+        "r": 2
+      },
+      {
+        "label": "11",
+        "q": 1,
+        "r": 2
+      },
+      {
+        "label": "12",
+        "q": -4,
+        "r": 1
+      },
+      {
+        "label": "13",
+        "q": -3,
+        "r": 1
+      },
+      {
+        "label": "14",
+        "q": 2,
+        "r": 1
+      },
+      {
+        "label": "15",
+        "q": 3,
+        "r": 1
+      },
+      {
+        "label": "16",
+        "q": -3,
+        "r": 0
+      },
+      {
+        "label": "17",
+        "q": 3,
+        "r": 0
+      },
+      {
+        "label": "18",
+        "q": -3,
+        "r": -1
+      },
+      {
+        "label": "19",
+        "q": -2,
+        "r": -1
+      },
+      {
+        "label": "20",
+        "q": 3,
+        "r": -1
+      },
+      {
+        "label": "21",
+        "q": 4,
+        "r": -1
+      },
+      {
+        "label": "22",
+        "q": -1,
+        "r": -2
+      },
+      {
+        "label": "23",
+        "q": 3,
+        "r": -2
+      },
+      {
+        "label": "24",
+        "q": -1,
+        "r": -3
+      },
+      {
+        "label": "25",
+        "q": 0,
+        "r": -3
+      },
+      {
+        "label": "26",
+        "q": 1,
+        "r": -3
+      },
+      {
+        "label": "27",
+        "q": 2,
+        "r": -3
+      },
+      {
+        "label": "28",
+        "q": 3,
+        "r": -3
+      },
+      {
+        "label": "29",
+        "q": 4,
+        "r": -3
+      },
+      {
+        "label": "30",
+        "q": 1,
+        "r": -4
+      },
+      {
+        "label": "31",
+        "q": 3,
+        "r": -4
+      }
+    ]
+  },
+  "pieces": [
+    {
+      "name": "hexahex-002",
+      "cells": [
+        {
+          "q": 0,
+          "r": 0
+        },
+        {
+          "q": 0,
+          "r": 1
+        },
+        {
+          "q": 0,
+          "r": 2
+        },
+        {
+          "q": 0,
+          "r": 3
+        },
+        {
+          "q": 0,
+          "r": 4
+        },
+        {
+          "q": 1,
+          "r": 0
+        }
+      ]
+    },
+    {
+      "name": "hexahex-009",
+      "cells": [
+        {
+          "q": 0,
+          "r": 0
+        },
+        {
+          "q": 0,
+          "r": 1
+        },
+        {
+          "q": 0,
+          "r": 2
+        },
+        {
+          "q": 0,
+          "r": 3
+        },
+        {
+          "q": 1,
+          "r": 1
+        },
+        {
+          "q": 1,
+          "r": 3
+        }
+      ]
+    },
+    {
+      "name": "pentahex-003",
+      "cells": [
+        {
+          "q": 0,
+          "r": 0
+        },
+        {
+          "q": 0,
+          "r": 1
+        },
+        {
+          "q": 0,
+          "r": 2
+        },
+        {
+          "q": 0,
+          "r": 3
+        },
+        {
+          "q": 1,
+          "r": 1
+        }
+      ]
+    },
+    {
+      "name": "pentahex-004",
+      "cells": [
+        {
+          "q": 0,
+          "r": 0
+        },
+        {
+          "q": 0,
+          "r": 1
+        },
+        {
+          "q": 0,
+          "r": 2
+        },
+        {
+          "q": 0,
+          "r": 3
+        },
+        {
+          "q": 1,
+          "r": 3
+        }
+      ]
+    },
+    {
+      "name": "pentahex-005",
+      "cells": [
+        {
+          "q": 0,
+          "r": 0
+        },
+        {
+          "q": 0,
+          "r": 1
+        },
+        {
+          "q": 0,
+          "r": 2
+        },
+        {
+          "q": 1,
+          "r": 0
+        },
+        {
+          "q": 1,
+          "r": 1
+        }
+      ]
+    },
+    {
+      "name": "pentahex-006",
+      "cells": [
+        {
+          "q": 0,
+          "r": 0
+        },
+        {
+          "q": 0,
+          "r": 1
+        },
+        {
+          "q": 0,
+          "r": 2
+        },
+        {
+          "q": 1,
+          "r": 0
+        },
+        {
+          "q": 1,
+          "r": 2
+        }
+      ]
+    },
+    {
+      "name": "pentahex-008",
+      "cells": [
+        {
+          "q": 0,
+          "r": 0
+        },
+        {
+          "q": 0,
+          "r": 1
+        },
+        {
+          "q": 0,
+          "r": 2
+        },
+        {
+          "q": 1,
+          "r": 1
+        },
+        {
+          "q": 1,
+          "r": 2
+        }
+      ]
+    },
+    {
+      "name": "pentahex-010",
+      "cells": [
+        {
+          "q": 0,
+          "r": 0
+        },
+        {
+          "q": 0,
+          "r": 1
+        },
+        {
+          "q": 0,
+          "r": 2
+        },
+        {
+          "q": 1,
+          "r": 2
+        },
+        {
+          "q": 1,
+          "r": 3
+        }
+      ]
+    },
+    {
+      "name": "pentahex-019",
+      "cells": [
+        {
+          "q": 0,
+          "r": 1
+        },
+        {
+          "q": 0,
+          "r": 2
+        },
+        {
+          "q": 1,
+          "r": 0
+        },
+        {
+          "q": 1,
+          "r": 1
+        },
+        {
+          "q": 2,
+          "r": 1
+        }
+      ]
+    }
+  ]
+}
