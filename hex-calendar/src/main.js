@@ -1,4 +1,4 @@
-import { HexCalendarGame } from "./game.js?v=20260628-textbuttons2";
+import { HexCalendarGame } from "./game.js?v=20260628-about1";
 
 async function main() {
   const response = await fetch("./public/data/puzzle.json");

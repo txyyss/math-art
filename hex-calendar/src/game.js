@@ -102,6 +102,10 @@ const ICONS = {
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8 19 13"/><path d="M15 9h.01"/><path d="M17.8 6.2 19 5"/><path d="m3 21 9-9"/><path d="M12.2 6.2 11 5"/></svg>',
   reset:
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"/><path d="m5.082 11.09 8.828 8.828"/></svg>',
+  about:
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>',
+  close:
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>',
 };
 
 const WINDOW_REGIONS = ["month", "date", "weekday"];
@@ -253,15 +257,27 @@ export class HexCalendarGame {
           <div class="tool-controls">
             <button type="button" data-action="reset" title="Reset pieces" aria-label="Reset pieces">${ICONS.reset}<span>Reset</span></button>
             <button type="button" data-action="solve" title="Solve current date" aria-label="Solve current date">${ICONS.solve}<span>Solve</span></button>
+            <button type="button" data-action="about" title="About" aria-label="About">${ICONS.about}<span>About</span></button>
           </div>
         </section>
         <section class="game-surface">
           <svg id="game-svg" role="application" aria-label="Hex calendar puzzle"></svg>
         </section>
       </main>
+      <div class="about-modal" data-about-modal hidden>
+        <div class="about-backdrop" data-about-close></div>
+        <section class="about-panel" role="dialog" aria-modal="true" aria-labelledby="about-title">
+          <button class="about-close" type="button" data-about-close aria-label="Close about panel">${ICONS.close}</button>
+          <img class="about-logo" src="./public/assets/jiudieyi-logo.svg" alt="Shengyi Wang logo" />
+          <h1 id="about-title">Hex Calendar Puzzle</h1>
+          <p>Choose three calendar cells, then cover the rest of the hex board with the pieces.</p>
+          <p class="about-credit">Created by Shengyi Wang.</p>
+        </section>
+      </div>
     `;
 
     this.svg = this.root.querySelector("#game-svg");
+    this.aboutModal = this.root.querySelector("[data-about-modal]");
     const toolControls = this.root.querySelector(".tool-controls");
     let handledPointerAction = null;
     toolControls.addEventListener("pointerup", (event) => {
@@ -296,6 +312,14 @@ export class HexCalendarGame {
     this.svg.addEventListener("pointerup", (event) => this.handlePointerEnd(event));
     this.svg.addEventListener("pointercancel", (event) => this.handlePointerEnd(event));
     this.svg.addEventListener("click", (event) => this.handleCanvasClick(event));
+    this.root.querySelectorAll("[data-about-close]").forEach((element) => {
+      element.addEventListener("click", () => this.closeAbout());
+    });
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        this.closeAbout();
+      }
+    });
   }
 
   selectToday() {
@@ -766,6 +790,10 @@ export class HexCalendarGame {
   }
 
   handleAction(action) {
+    if (action === "about") {
+      this.openAbout();
+      return;
+    }
     if (action === "solve") {
       this.solveCurrentPuzzle();
       return;
@@ -781,6 +809,17 @@ export class HexCalendarGame {
     if (action === "rotate-left" || action === "rotate-right" || action === "flip") {
       this.transformPiece(piece, action);
       this.render();
+    }
+  }
+
+  openAbout() {
+    this.aboutModal.hidden = false;
+    this.root.querySelector(".about-close")?.focus();
+  }
+
+  closeAbout() {
+    if (this.aboutModal) {
+      this.aboutModal.hidden = true;
     }
   }
 
